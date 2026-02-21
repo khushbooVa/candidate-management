@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+node-backend/node_modules/
+
+# Environment Variables
+.env
+.env.local
+frontend/.env
+node-backend/.env
+
+# Build Artifacts
+frontend/dist/
+frontend/build/
+*.pdf
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# VS Code / IDE
+.vscode/
+.idea/
+
+# Brain/Artifacts
+.gemini/
+brain/
+*.md (only brain related)

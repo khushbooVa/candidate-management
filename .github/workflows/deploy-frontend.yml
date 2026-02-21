@@ -1,0 +1,41 @@
+name: Deploy Frontend to Netlify
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'client/**' # Adjust this to 'frontend/**' if your folder is named 'frontend'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: client/package.json
+
+      - name: Install Dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build Project
+        working-directory: client
+        run: npm run build
+        env:
+          # Add any frontend environment variables here
+          CI: false # Prevents CRA from failing on warnings
+
+      - name: Deploy to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=client/build --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

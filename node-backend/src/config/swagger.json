@@ -1,0 +1,392 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Hiring Process Simplifier API",
+        "version": "1.0.0",
+        "description": "API Documentation for the Candidate Management System",
+        "contact": {
+            "name": "Developer"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Development Server"
+        },
+        {
+            "url": "https://node-backend-a3wd27gl8-khushboovas-projects.vercel.app",
+            "description": "Production Server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "summary": "Register a new user",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "enum": [
+                                            "HR",
+                                            "Interviewer"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "Login user",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful, returns JWT token"
+                    }
+                }
+            }
+        },
+        "/api/auth/interviewers": {
+            "get": {
+                "summary": "Get all interviewers",
+                "tags": [
+                    "Auth"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of interviewers"
+                    }
+                }
+            }
+        },
+        "/api/candidates": {
+            "get": {
+                "summary": "Get all candidates",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of candidates"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new candidate",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "skills"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "skills": {
+                                        "type": "string"
+                                    },
+                                    "resume": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Candidate created"
+                    }
+                }
+            }
+        },
+        "/api/candidates/stats/summary": {
+            "get": {
+                "summary": "Get dashboard statistics summary",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dashboard statistics"
+                    }
+                }
+            }
+        },
+        "/api/candidates/{id}": {
+            "get": {
+                "summary": "Get candidate by ID",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Candidate details"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update candidate profile",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "skills": {
+                                        "type": "string"
+                                    },
+                                    "resume": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Candidate updated"
+                    }
+                }
+            }
+        },
+        "/api/candidates/{id}/stage": {
+            "patch": {
+                "summary": "Update candidate stage and feedback",
+                "tags": [
+                    "Candidates"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "stage": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "feedbackText": {
+                                        "type": "string"
+                                    },
+                                    "assignedInterviewer": {
+                                        "type": "string"
+                                    },
+                                    "scheduledTime": {
+                                        "type": "string"
+                                    },
+                                    "interviewMode": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Virtual",
+                                            "In-person"
+                                        ]
+                                    },
+                                    "interviewStatus": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Pending",
+                                            "Accepted",
+                                            "Rejected"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Candidate stage updated"
+                    }
+                }
+            }
+        },
+        "/api/search": {
+            "get": {
+                "summary": "NLP search for candidates",
+                "tags": [
+                    "Search"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Natural language search query (e.g. 'show candidates in L1')"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results"
+                    }
+                }
+            }
+        }
+    }
+}

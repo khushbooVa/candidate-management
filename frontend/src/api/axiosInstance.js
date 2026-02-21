@@ -7,7 +7,6 @@ const API = axios.create({
     },
 });
 
-// Add interceptor for Bearer token
 API.interceptors.request.use((config) => {
     const userInfo = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo"))

@@ -9,7 +9,7 @@ console.log(">>> [SERVER] Initializing App...");
 
 // Middlewares
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:3000", /\.vercel\.app$/],
+    origin: ["http://localhost:5173", "https://candidatemgmt.netlify.app", /\.vercel\.app$/],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 }));
@@ -18,11 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Static folder for file uploads
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-
-// Diagnostic route
 app.get("/ping", (req, res) => res.json({ msg: "Active Server Verified", version: "1.2", time: new Date().toISOString() }));
 
-// Documentation
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
     customCssUrl: CSS_URL,

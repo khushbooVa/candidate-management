@@ -1,9 +1,6 @@
 const Candidate = require("../models/Candidate");
 
-/**
- * Super simple NLP-style search service
- * Parses queries like "show candidates in L1" or "find react developers"
- */
+
 const searchCandidates = async (queryText) => {
     const query = queryText.toLowerCase();
     let filter = {};

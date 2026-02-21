@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'client/**' # Adjust this to 'frontend/**' if your folder is named 'frontend'
+      - 'frontend/**'
 
 jobs:
   build-and-deploy:
@@ -19,14 +19,14 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-          cache-dependency-path: client/package.json
+          cache-dependency-path: frontend/package.json
 
       - name: Install Dependencies
-        working-directory: client
+        working-directory: frontend
         run: npm ci
 
       - name: Build Project
-        working-directory: client
+        working-directory: frontend
         run: npm run build
         env:
           # Add any frontend environment variables here
@@ -35,7 +35,7 @@ jobs:
       - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=client/build --prod
+          args: deploy --dir=frontend/dist --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

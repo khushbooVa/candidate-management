@@ -9,18 +9,7 @@ console.log(">>> [SERVER] Initializing App...");
 
 // Middlewares
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl)
-        if (!origin) return callback(null, true);
-
-        // Allow any localhost origin
-        if (origin.startsWith("http://localhost:")) {
-            return callback(null, true);
-        }
-
-        // Block other origins
-        return callback(new Error("Not allowed by CORS"));
-    },
+    origin: ["http://localhost:5173", "http://localhost:3000", /\.vercel\.app$/],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 }));

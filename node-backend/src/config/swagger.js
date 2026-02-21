@@ -1,5 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -11,10 +12,16 @@ const swaggerOptions = {
             contact: {
                 name: 'Developer'
             },
-            servers: [{
-                url: 'http://localhost:5000',
-                description: 'Development Server'
-            }]
+            servers: [
+                {
+                    url: 'http://localhost:5000',
+                    description: 'Development Server'
+                },
+                {
+                    url: 'https://node-backend-e9lt0drys-khushboovas-projects.vercel.app',
+                    description: 'Production Server'
+                }
+            ]
         },
         components: {
             securitySchemes: {
@@ -29,7 +36,7 @@ const swaggerOptions = {
             bearerAuth: []
         }]
     },
-    apis: ['./src/docs/swagger/*.js'] // Paths to files containing OpenAPI annotations
+    apis: [path.join(__dirname, '../docs/swagger/*.js')] // Absolute path for Vercel
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

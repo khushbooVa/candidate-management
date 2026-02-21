@@ -26,3 +26,4 @@ Thumbs.db
 .gemini/
 brain/
 *.md (only brain related)
+.vercel

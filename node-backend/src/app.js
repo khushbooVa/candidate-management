@@ -9,9 +9,18 @@ console.log(">>> [SERVER] Initializing App...");
 
 // Middlewares
 app.use(cors({
-    origin: ["http://localhost:5173", "https://candidatemgmt.netlify.app", /\.vercel\.app$/],
+    origin: (origin, callback) => {
+        const allowedOrigins = ["http://localhost:5173", "https://candidatemgmt.netlify.app"];
+        if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+    optionsSuccessStatus: 200
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

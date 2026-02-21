@@ -77,6 +77,16 @@ The interactive API documentation is served directly from the backend. Once the 
 
 ---
 
+## 🌐 Production Links
+
+### 🖥️ Live Application (Frontend)
+👉 **[https://candidatemgmt.netlify.app](https://candidatemgmt.netlify.app)**
+
+### 📖 API Documentation (Backend)
+👉 **[https://node-backend-a3wd27gl8-khushboovas-projects.vercel.app/api-docs/](https://node-backend-a3wd27gl8-khushboovas-projects.vercel.app/api-docs/)**
+
+---
+
 ## 🌟 Key Features
 
 - **Role-Based Workflows**:

@@ -18,7 +18,7 @@ const swaggerOptions = {
                     description: 'Development Server'
                 },
                 {
-                    url: 'https://node-backend-e9lt0drys-khushboovas-projects.vercel.app',
+                    url: 'https://node-backend-a3wd27gl8-khushboovas-projects.vercel.app',
                     description: 'Production Server'
                 }
             ]
@@ -36,7 +36,7 @@ const swaggerOptions = {
             bearerAuth: []
         }]
     },
-    apis: [path.join(__dirname, '../docs/swagger/*.js')] // Absolute path for Vercel
+    apis: [path.join(process.cwd(), 'src/docs/swagger/*.js')] // Absolute path for Vercel using cwd
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
